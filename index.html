@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOLLOW UP SURVEY FRONT END</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@3.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <style>
+        [v-cloak] > * { display:none }
+        [v-cloak]::before { content: "loading…" }
+    </style>
+</head>
+<body>
+    
+
+    <div id="app" v-cloak>
+        <v-app>
+            <p v-show="debug">{{ JSON.stringify(ipData) }}</p>
+            <v-form>
+                <v-main v-if="accessDenied === false">
+                    
+                    
+                    <login-page :login_details="loginDetails"></login-page> 
+                    <v-btn color="primary" @click="validateLogin()">Login</v-btn>
+                    <v-btn color="primary" @click="step+=1">Skip</v-btn>
+                    
+                </v-main>
+                <v-main v-else>
+                   
+                    Access denied. 
+                    Your location {{ ipData.city }} with zipcode {{ ipData.zip }} is not authorized to access this survey. 
+                     
+                </v-main>
+                
+                
+            </v-form>
+
+        </v-app>
+    </div>
+
+    <script type="text/x-template" id="login-page-template">
+        <div>
+            <v-form class="px-3">
+                <v-container>
+                    <v-row>  Please Enter Your Details </v-row>
+                    <v-row> 
+                        <v-col cols="12" md="4">
+                            <v-text-field
+                                v-model="login_details.firstName"
+                                :rules="login_details.firstNameRules"
+                                label="First name"
+                                required
+                                outlined
+                            ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" md="4">
+                            <v-text-field
+                                v-model="login_details.lastName"
+                                :rules="login_details.lastNameRules"
+                                label="Last name"
+                                required
+                                outlined
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>    
+                    <v-row> 
+                        <v-col cols="12" md="4">
+                                                     
+                            <v-text-field
+                                v-model="login_details.dateOfBirth"
+                                label="Date Of Birth"
+                                required
+                                outlined
+                                type="date"
+                            ></v-text-field>
+                            <v-date-picker v-model="login_details.dateOfBirth" v-if="login_details.dateOfBirth !== ''"></v-date-picker>
+                            
+                        </v-col>
+                        {{ dataArray }}
+                    </v-row> 
+                    
+                 
+                </v-container>
+            </v-form>
+            
+        </div>
+
+    </script>
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="app.js"></script>
+    
+</body>
+</html>
