@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+
+    <script type="application/javascript">
+        function getIP(json) {
+            //console.log(json)
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const zipcode = urlParams.get("zipcode");
+            const email = urlParams.get("email");
+            const expiry = urlParams.get("expiry"); 
+            console.log(zipcode);
+            console.log(email);
+            console.log(expiry);
+            var body = document.createElement("body");
+            if (json.zip != "11550") {
+                console.log("not allowed");
+                body.innerHTML = "<p>Access denied for this zip code</p>";
+
+            } else {
+                body.innerHTML = "<p>Allowed for this zip code</p>";
+                
+                let loginFormComponents = ["Full Name", "Date Of Birth"]; 
+                let loginForm = document.createElement("form"); 
+                for(let component of loginFormComponents){
+                    label = document.createElement('label');
+                    label.setAttribute("for", component.toLowerCase().replace(/ /g,''));
+                    label.innerText = "\n\n" + component + "\n"; 
+
+                    comp = document.createElement("input");
+                    comp.setAttribute("type", "text"); 
+                    comp.setAttribute("name", component.toLowerCase().replace(/ /g,'')); 
+                    comp.setAttribute("id", component.toLowerCase().replace(/ /g,'')); 
+                    comp.setAttribute("value", "");
+
+                    loginForm.appendChild(label); 
+                    loginForm.appendChild(comp);
+                }
+                console.log(loginForm); 
+                let submit = document.createElement("input"); 
+                submit.setAttribute("type", "submit"); 
+                submit.setAttribute("value", "Submit"); 
+
+                newLine = document.createElement("label"); 
+                newLine.innerText = "\n\n"; 
+                loginForm.appendChild(newLine);
+                loginForm.appendChild(submit);
+                loginForm.onsubmit = login;  
+
+                body.appendChild(loginForm); 
+
+                }
+            document.documentElement.appendChild(body);
+        }
+
+        
+        function login() {
+            let fullname = document.getElementById("fullname");
+            let dob = document.getElementById("dateofbirth"); 
+            if(dob.value === "22"){
+                window.open("https://www.google.com")
+
+            }
+            //fullname.value = "";
+            //dob.value = ""; 
+        }
+        
+       
+            
+    </script>
+          
+    <script type="application/javascript" src="http://ip-api.com/json/?callback=getIP"></script>
+</head>
+<body>
+    <div id="form">
+    </div>
+
+</body>
+</html>
